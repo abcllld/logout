@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Logout Form</title>
+    <link rel="stylesheet" href="logout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+
+    <div class="logout-form">
+        <h2>Logout Form</h2>
+        <form id="logoutForm">
+            <div class="form-group">
+                <label for="email">Enter Email Address:</label>
+                <div class="input-icon">
+                    <input type="email" id="email" name="email" required>
+                    <i class="fa-solid fa-circle-exclamation" id="wrongEmailIcon"></i>
+                    <i class="fa-solid fa-square-check" id="correctEmailIcon"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="agreeCheckbox" required>
+                    I agree to the terms and policy of this site
+                </label>
+            </div>
+            <button type="button" id="logoutBtn">Logout</button>
+
+            <div class="form-group" id="goodbyeIcons">
+                <label id="goodbyeLabel" style="display: none;">Goodbye!</label>
+                <div class="goodbye-icon">
+                    <i class="fa-solid fa-right-from-bracket" id="icon1"></i>
+                    <i class="fa-solid fa-right-from-bracket" id="icon2"></i>
+                    <i class="fa-solid fa-right-from-bracket" id="icon3"></i>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="logout-message" id="logoutMessage">
+        <!-- Message content will be displayed here -->
+    </div>
+
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            const email = document.getElementById('email').value;
+            const agreeCheckbox = document.getElementById('agreeCheckbox').checked;
+
+            if (!email) {
+                showLogoutMessage('Enter the Email');
+            } else if (!agreeCheckbox) {
+                showLogoutMessage('Please agree to the terms');
+            } else {
+                const isValidEmail = validateEmail(email);
+                if (isValidEmail) {
+                    showLogoutMessage('You are logged out successfully!');
+                    document.getElementById('logoutForm').reset();
+                    document.getElementById('wrongEmailIcon').style.opacity = '0';
+                    document.getElementById('correctEmailIcon').style.opacity = '1';
+                    moveGoodbyeIcons();
+                    showGoodbyeLabel();
+                } else {
+                    showLogoutMessage('Invalid Email');
+                    document.getElementById('wrongEmailIcon').style.opacity = '1';
+                    document.getElementById('correctEmailIcon').style.opacity = '0';
+                }
+            }
+        });
+
+        function validateEmail(email) {
+            const re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        function showLogoutMessage(message) {
+            const logoutMessage = document.getElementById('logoutMessage');
+            logoutMessage.innerText = message;
+            logoutMessage.style.display = 'block';
+            setTimeout(function () {
+                logoutMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        function moveGoodbyeIcons() {
+            const goodbyeIcons = document.getElementById('goodbyeIcons');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            const btnPosition = logoutBtn.getBoundingClientRect();
+            goodbyeIcons.style.left = btnPosition.left + 'px';
+            goodbyeIcons.style.top = btnPosition.top + 'px';
+
+            goodbyeIcons.style.animation = 'moveRight 2s forwards';
+
+            const icon1 = document.getElementById('icon1');
+            const icon2 = document.getElementById('icon2');
+            const icon3 = document.getElementById('icon3');
+
+            icon1.style.animation = 'moveRight 2s forwards';
+            icon2.style.animation = 'moveRight 2s forwards';
+            icon3.style.animation = 'moveRight 2s forwards';
+        }
+
+        function showGoodbyeLabel() {
+            const goodbyeLabel = document.getElementById('goodbyeLabel');
+            goodbyeLabel.style.display = 'block';
+        }
+
+    </script>
+</body>
+
+</html>
