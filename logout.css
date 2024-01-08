@@ -6,7 +6,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url("back.jpg"); /* Replace with your background image URL */
+  background-image: url("logout.jpg"); /* Replace with your background image URL */
   background-size: cover;
   background-position: center;
 }
